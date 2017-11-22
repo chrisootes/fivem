@@ -1,0 +1,2 @@
+-- start free roam
+-- TriggerClientEvent('start', 'freeroam', 'free')
