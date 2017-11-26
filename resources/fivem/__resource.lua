@@ -1,3 +1,2 @@
-resource_type 'gametype' { name = 'Minigames' }
-
-client_script 'fivem_client.lua'
+client_script 'init_client.lua'
+server_script 'init_server.lua'
