@@ -1,5 +1,15 @@
--- start free roam
--- TriggerServerEvent('start', 'freeroam', 'free')
+SetMapName('San Andreas')
+SetGameType('Freeroam')
 
-print("Setting server lobby location")
-TriggerEvent("setServerLobbyLocation", 1788.25, 3890.34, 34.3849, 0.0)
+-- load database
+
+AddEventHandler('playerConnecting', function(playerName, setKickReason)
+  print('Player connecting: ' .. playerName)
+end)
+
+AddEventHandler('playerConnected', function()
+  playerName = GetPlayerName(source)
+  print('Player connected: ' .. playerName)
+
+  -- give player data
+end)

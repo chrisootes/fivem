@@ -1,2 +1,6 @@
 client_script 'init_client.lua'
 server_script 'init_server.lua'
+client_script 'lobbby_client.lua'
+server_script 'lobbby_server.lua'
+client_script 'player_client.lua'
+server_script 'command_server.lua'
