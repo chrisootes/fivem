@@ -3,13 +3,13 @@ SetGameType('Freeroam')
 
 -- load database
 
-AddEventHandler('playerConnecting', function(playerName, setKickReason)
-  print('Player connecting: ' .. playerName)
+AddEventHandler('playerConnecting', function(PlayerName, setKickReason)
+  print('Player connecting: ' .. PlayerName)
 end)
 
 AddEventHandler('playerConnected', function()
-  playerName = GetPlayerName(source)
-  print('Player connected: ' .. playerName)
-
+  PlayerName = GetPlayerName(source)
+  print('Player connected: ' .. PlayerName)
   -- give player data
+  TriggerClientEvent('onClientConnected', data)
 end)
