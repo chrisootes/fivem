@@ -1,49 +1,47 @@
-local PlayerModel = 'a_m_y_skater_01'
+local player_model = "a_m_y_skater_01"
 
-RegisterNetEvent('setPlayerModel')
-AddEventHandler('setPlayerModel', function(newPlayerModel)
-  PlayerModel = newPlayerModel
+function set_player_model(new_player_model)
+  player_model = new_player_model
 end
 
-RegisterNetEvent('SpawnPlayer')
-AddEventHandler('SpawnPlayer', function(SpawnPoint)
+function spawn_player(spawn_point)
   Citizen.CreateThread(function()
-    Citizen.Trace('Fade screen out')
+    Citizen.Trace("Fade screen out")
     DoScreenFadeOut(500)
     while IsScreenFadingOut() do
       Citizen.Wait(1)
     end
-    Citizen.Trace('Player model')
-    RequestModel(PlayerModel)
-    while not HasModelLoaded(PlayerModel) do
+    Citizen.Trace("Player model")
+    RequestModel(player_model)
+    while not HasModelLoaded(player_model) do
       Citizen.Wait(1)
     end
-    SetPlayerModel(PlayerId(), PlayerModel)
-    SetModelAsNoLongerNeeded(PlayerModel)
-    Citizen.Trace('Teleport location')
-    RequestCollisionAtCoord(SpawnPoint.x, SpawnPoint.y, SpawnPoint.z)
-    local PlayerPed = GetPlayerPed(-1)
-    SetEntityCoordsNoOffset(PlayerPed, SpawnPoint.x, SpawnPoint.y, SpawnPoint.z, false, false, false, true)
-    NetworkResurrectLocalPlayer(SpawnPoint.x, SpawnPoint.y, SpawnPoint.z, SpawnPoint.heading, true, false)
-    Citizen.Trace('Clear effects')
-    ClearPedTasksImmediately(PlayerPed)
-    RemoveAllPedWeapons(PlayerPed)
+    SetPlayerModel(PlayerId(), player_model)
+    SetModelAsNoLongerNeeded(player_model)
+    Citizen.Trace("Teleport location")
+    RequestCollisionAtCoord(spawn_point.x, spawn_point.y, spawn_point.z)
+    local player_ped = GetPlayerPed(-1)
+    SetEntityCoordsNoOffset(player_ped, spawn_point.x, spawn_point.y, spawn_point.z, false, false, false, true)
+    NetworkResurrectLocalPlayer(spawn_point.x, spawn_point.y, spawn_point.z, spawn_point.heading, true, false)
+    Citizen.Trace("Clear effects")
+    ClearPedTasksImmediately(player_ped)
+    RemoveAllPedWeapons(player_ped)
     ClearPlayerWantedLevel(PlayerId())
-    while not HasCollisionLoadedAroundEntity(PlayerPed) do
+    while not HasCollisionLoadedAroundEntity(player_ped) do
       Citizen.Wait(1)
     end
-    Citizen.Trace('Fade screen in')
+    Citizen.Trace("Fade screen in")
     DoScreenFadeIn(500)
     while IsScreenFadingIn() do
       Citizen.Wait(1)
     end
-    TriggerEvent('onPlayerSpawned', SpawnPoint)
+    Citizen.Trace("Trigger onPlayerSpawned")
+    TriggerEvent("onPlayerSpawned", spawn_point)
   end)
 end)
 
-RegisterNetEvent('GivePlayer')
-AddEventHandler('GivePlayer', function()
-  GiveWeaponToPed(GetPlayerPed(-1), GetHashKey('WEAPON_FLASHLIGHT'), 1, false, false)
+function GivePlayer(Weapon)
+  GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_FLASHLIGHT"), 1, false, false)
 end)
 
 Citizen.CreateThread(function()
@@ -53,7 +51,8 @@ Citizen.CreateThread(function()
     if NetworkIsPlayerActive(player) then
       local ped = PlayerPedId()
       if IsPedFatallyInjured(ped) then
-        TriggerEvent('onPlayerDown')
+        Citizen.Trace("Trigger onPlayerDown")
+        TriggerEvent("onPlayerDown")
       end
     end
   end
