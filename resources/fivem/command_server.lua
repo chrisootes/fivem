@@ -1,11 +1,11 @@
-AddEventHandler( "rconCommand", function(CommandName, CommandArguments)
-  if CommandName:lower() == "clientkick" then
-      local PlayerId = table.remove(CommandArguments, 1)
-      local Message = table.concat(CommandArguments, " ")
-      DropPlayer(PlayerId, Message)
+AddEventHandler( "rconCommand", function(command_name, command_arguments)
+  if command_name:lower() == "clientkick" then
+      local player_id = table.remove(command_arguments, 1)
+      local message = table.concat(command_arguments, " ")
+      DropPlayer(player_id, message)
       CancelEvent()
-  elseif CommandName:lower() == "clientspawn" then
-    local  = table.remove(CommandArguments, 1)
+  elseif command_name:lower() == "clientspawn" then
+    local  = table.remove(command_arguments, 1)
     TriggerClientEvent("SpawnPlayer", )
   end
 end)
